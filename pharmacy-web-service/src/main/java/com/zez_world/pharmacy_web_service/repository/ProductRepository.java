@@ -17,9 +17,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryContainingIgnoreCase(String category);
     List<Product> findByManufacturerContainingIgnoreCase(String manufacturer);
 
-    @Query("SELECT p FROM Product p WHERE p.activeSubstance = :activeSubstance AND p.id != :excludeId AND p.visible = true")
-    List<Product> findAnalogsByActiveSubstance(@Param("activeSubstance") String activeSubstance,
-                                               @Param("excludeId") Long excludeId);
+    @Query("SELECT p FROM Product p WHERE p.activeSubstance = :activeSubstance AND p.category = :category  AND p.id != :excludeId AND p.visible = true")
+    List<Product> findAnalogsByActiveSubstanceAndCategory(@Param("activeSubstance") String activeSubstance,
+                                                          @Param("category") String category,
+                                                          @Param("excludeId") Long excludeId);
 
     @Query("SELECT p FROM Product p WHERE p.visible = true AND (" +
             "LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +

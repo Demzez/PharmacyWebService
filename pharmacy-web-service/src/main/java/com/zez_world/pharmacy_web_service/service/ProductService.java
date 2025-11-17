@@ -66,7 +66,7 @@ public class ProductService {
 
         ProductResponseDTO originalDto = ProductResponseDTO.fromPublic(original);
 
-        return productRepository.findAnalogsByActiveSubstance(original.getActiveSubstance(), productId)
+        return productRepository.findAnalogsByActiveSubstanceAndCategory(original.getActiveSubstance(), original.getCategory(), productId)
                 .stream()
                 .map(ProductResponseDTO::fromPublic)
                 .map(productDto -> AnalogProductDTO.from(productDto, originalDto))

@@ -97,7 +97,7 @@ public class UserService {
         return user.isPresent() && passwordEncoder.matches(password, user.get().getPassword());
     }
 
-    public Optional<User> findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
     }
 }

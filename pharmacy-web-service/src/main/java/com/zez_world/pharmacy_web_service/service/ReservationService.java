@@ -30,7 +30,7 @@ public class ReservationService {
     private ProductService productService;
 
     public ReservationResponseDTO createReservation(Long userId, ReservationRequestDTO reservationDto) {
-        User user = userService.findUserByUsername("user" + userId) // Временное решение
+        User user = userService.findUserById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Product product = productService.getProductEntityById(reservationDto.getProductId());
 

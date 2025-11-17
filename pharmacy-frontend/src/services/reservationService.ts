@@ -23,7 +23,7 @@ export const reservationService = {
     },
 
     async cancelReservation(reservationId: number) {
-        const response = await api.delete(`/reservations/${reservationId}`);
+        const response = await api.delete(`/reservations/${reservationId}/cancel`);
         return response.data;
     },
 
