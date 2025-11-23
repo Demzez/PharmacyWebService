@@ -32,7 +32,7 @@ public class AdminController {
     private UserService userService;
 
     // Управление пользователями
-    @PostMapping("/users")
+    @PostMapping("/users/create")
     public ResponseEntity<UserResponseDTO> createAdmin(@RequestBody UserCreateDTO userDto) {
         return ResponseEntity.ok(userService.createAdmin(userDto));
     }
@@ -42,10 +42,6 @@ public class AdminController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/users/role/{role}")
-    public ResponseEntity<List<UserResponseDTO>> getUsersByRole(@PathVariable Role role) {
-        return ResponseEntity.ok(userService.getUsersByRole(role));
-    }
 
     @PutMapping("/users/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserCreateDTO userDto) {

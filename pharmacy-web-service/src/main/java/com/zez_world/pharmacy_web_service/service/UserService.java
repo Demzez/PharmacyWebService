@@ -62,12 +62,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserResponseDTO> getUsersByRole(Role role) {
-        return userRepository.findByRole(role)
-                .stream()
-                .map(UserResponseDTO::from)
-                .collect(Collectors.toList());
-    }
 
     public Optional<UserResponseDTO> getUserById(Long id) {
         return userRepository.findById(id)
@@ -78,6 +72,8 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         user.setEmail(userDetails.getEmail());
         user.setPhone(userDetails.getPhone());
 

@@ -122,8 +122,8 @@ public class DemoDataLoader implements CommandLineRunner {
 
         System.out.println("✅ Демо-данные успешно загружены!");
         System.out.println("👤 Пользователи:");
-        System.out.println("   - Админ: admin / admin123");
-        System.out.println("   - Пользователь: user / user123");
+        System.out.println("   - Админ: admin / admin");
+        System.out.println("   - Пользователь: user / user");
         System.out.println("   - Пользователь: ivanov / password");
         System.out.println("💊 Загружено " + products.length + " товаров");
         System.out.println("🌐 API доступен на: http://localhost:2222");

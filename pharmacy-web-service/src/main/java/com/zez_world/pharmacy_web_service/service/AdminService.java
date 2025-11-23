@@ -62,6 +62,7 @@ public class AdminService {
         Double totalAmount = quantity * price;
 
         SaleReport saleReport = new SaleReport();
+        saleReport.setProduct(productService.getProductEntityById(productId));
         saleReport.setQuantitySold(quantity);
         saleReport.setTotalAmount(totalAmount);
         saleReport.setSaleDate(LocalDate.now());

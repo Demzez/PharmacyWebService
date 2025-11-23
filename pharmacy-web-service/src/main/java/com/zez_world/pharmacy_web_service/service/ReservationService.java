@@ -4,8 +4,10 @@ import com.zez_world.pharmacy_web_service.dto.request.ReservationRequestDTO;
 import com.zez_world.pharmacy_web_service.dto.response.ReservationResponseDTO;
 import com.zez_world.pharmacy_web_service.entity.Product;
 import com.zez_world.pharmacy_web_service.entity.Reservation;
+import com.zez_world.pharmacy_web_service.entity.SaleReport;
 import com.zez_world.pharmacy_web_service.entity.User;
 import com.zez_world.pharmacy_web_service.repository.ReservationRepository;
+import com.zez_world.pharmacy_web_service.repository.SaleReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ public class ReservationService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdminService adminService;
 
     @Autowired
     private ProductService productService;
@@ -69,6 +74,7 @@ public class ReservationService {
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
         reservation.setCompleted(true);
+        adminService.recordSale(reservation.getProduct().getId(), reservation.getQuantity(), reservation.getProduct().getPrice());
         Reservation updatedReservation = reservationRepository.save(reservation);
         return ReservationResponseDTO.from(updatedReservation);
     }
