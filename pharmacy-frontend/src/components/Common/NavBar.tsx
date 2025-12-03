@@ -1,4 +1,5 @@
 import React from 'react';
+import {Page} from '../../App'
 
 // Определяем тип для пользователя
 interface User {
@@ -9,7 +10,7 @@ interface User {
 interface NavbarProps {
     currentUser: User | null;
     onLogout: () => void;
-    onNavigate: (page: string) => void;
+    onNavigate: (page: Page) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, onNavigate }) => {
@@ -27,6 +28,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, onNavigate }) =>
                         <button onClick={() => onNavigate('pharmacy')} className="nav-link">
                             Каталог
                         </button>
+                        {!isAdmin && (
+                            <button onClick={() => onNavigate('my-reservations')} className="nav-link">
+                                Мои бронирования
+                            </button>
+                        )}
 
                         {isAdmin && (
                             <>

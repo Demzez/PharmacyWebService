@@ -52,3 +52,8 @@ export interface Reservation {
     completed: boolean;
     status: string;
 }
+
+export interface ReservationRequest {
+    productId: number;
+    quantity: number;
+}

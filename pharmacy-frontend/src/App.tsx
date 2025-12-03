@@ -6,11 +6,12 @@ import ProductList from './components/Pharmacy/ProductList';
 import ProductManagement from './components/Admin/ProductManagement';
 import SalesReports from './components/Admin/SalesReports';
 import PopularProducts from './components/Admin/PopularProducts';
+import MyReservations from './components/Pharmacy/MyReservations';
 import { authService } from './services/authService';
 import { User } from './types';
 import './App.css';
 
-export type Page = 'login' | 'register' | 'pharmacy' | 'admin-products' | 'sales-reports' | 'popular-products';
+export type Page = 'login' | 'register' | 'pharmacy' | 'my-reservations' | 'admin-products' | 'sales-reports' | 'popular-products' ;
 
 const App: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<Page>('login');
@@ -108,6 +109,8 @@ const App: React.FC = () => {
                 return <Register onRegister={handleRegister} onSwitchToLogin={() => setCurrentPage('login')} />;
             case 'pharmacy':
                 return <ProductList />;
+            case 'my-reservations':
+                return <MyReservations />;
             case 'admin-products':
                 return currentUser?.role === 'ROLE_ADMIN' ? <ProductManagement /> : null;
             case 'sales-reports':
