@@ -2,7 +2,9 @@ package com.zez_world.pharmacy_web_service.controller;
 
 import com.zez_world.pharmacy_web_service.dto.request.LoginRequestDTO;
 import com.zez_world.pharmacy_web_service.dto.request.UserCreateDTO;
+import com.zez_world.pharmacy_web_service.dto.response.AuthResponseDTO;
 import com.zez_world.pharmacy_web_service.dto.response.UserResponseDTO;
+import com.zez_world.pharmacy_web_service.security.JwtTokenProvider;
 import com.zez_world.pharmacy_web_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserCreateDTO userDto) {
@@ -37,9 +42,20 @@ public class AuthController {
                 loginRequest.getUsername(), loginRequest.getPassword());
 
         if (isValid) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Login successful");
-            response.put("username", loginRequest.getUsername());
+            var user = userService.findByUsername(loginRequest.getUsername())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            String token = jwtTokenProvider.createToken(
+                    loginRequest.getUsername(),
+                    user.getRole().name());
+
+            AuthResponseDTO response = new AuthResponseDTO(
+                    token,
+                    loginRequest.getUsername(),
+                    user.getRole().name(),
+                    "Login successful"
+            );
+
             return ResponseEntity.ok(response);
         } else {
             Map<String, String> response = new HashMap<>();

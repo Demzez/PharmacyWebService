@@ -3,13 +3,18 @@ package com.zez_world.pharmacy_web_service.controller;
 import com.zez_world.pharmacy_web_service.dto.request.ReservationRequestDTO;
 import com.zez_world.pharmacy_web_service.dto.response.ReservationResponseDTO;
 import com.zez_world.pharmacy_web_service.service.ReservationService;
+import com.zez_world.pharmacy_web_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -17,12 +22,15 @@ import java.util.Map;
 public class ReservationController {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<?> createReservation(@RequestBody ReservationRequestDTO request,
-                                               @RequestParam Long userId) {
+    public ResponseEntity<?> createReservation(@RequestBody ReservationRequestDTO request) {
         try {
+            Long userId = getCurrentUserId();
             ReservationResponseDTO reservation = reservationService.createReservation(userId, request);
             return ResponseEntity.ok(reservation);
         } catch (RuntimeException e) {
@@ -32,13 +40,15 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReservationResponseDTO>> getUserReservations(@PathVariable Long userId) {
+    @GetMapping("/user")
+    public ResponseEntity<List<ReservationResponseDTO>> getUserReservations() {
+        Long userId = getCurrentUserId();
         return ResponseEntity.ok(reservationService.getUserReservations(userId));
     }
 
-    @GetMapping("/user/{userId}/active")
-    public ResponseEntity<List<ReservationResponseDTO>> getActiveUserReservations(@PathVariable Long userId) {
+    @GetMapping("/user/active")
+    public ResponseEntity<List<ReservationResponseDTO>> getActiveUserReservations() {
+        Long userId = getCurrentUserId();
         return ResponseEntity.ok(reservationService.getActiveUserReservations(userId));
     }
 
@@ -59,5 +69,11 @@ public class ReservationController {
             response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    private Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userService.getUserIdByUsername(username);
     }
 }

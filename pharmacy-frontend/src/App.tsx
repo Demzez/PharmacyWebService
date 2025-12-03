@@ -10,25 +10,59 @@ import { authService } from './services/authService';
 import { User } from './types';
 import './App.css';
 
-// Экспортируем тип Page, чтобы использовать в других компонентах
 export type Page = 'login' | 'register' | 'pharmacy' | 'admin-products' | 'sales-reports' | 'popular-products';
 
 const App: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<Page>('login');
     const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const user = authService.getCurrentUser();
-        if (user) {
-            setCurrentUser(user);
-            setCurrentPage(user.role === 'ROLE_ADMIN' ? 'admin-products' : 'pharmacy');
-        }
+        // Проверяем наличие валидного токена при загрузке
+        const checkAuth = () => {
+            setLoading(true);
+            const user = authService.getCurrentUser();
+            if (user && !authService.isTokenExpired()) {
+                setCurrentUser(user);
+                // Автоматический редирект на нужную страницу
+                if (user.role === 'ROLE_ADMIN') {
+                    setCurrentPage('admin-products');
+                } else {
+                    setCurrentPage('pharmacy');
+                }
+            } else {
+                // Если токен просрочен, очищаем
+                authService.logout();
+                setCurrentPage('login');
+            }
+            setLoading(false);
+        };
+
+        checkAuth();
+
+        // Можно добавить периодическую проверку токена
+        const interval = setInterval(() => {
+            if (authService.isTokenExpired()) {
+                handleLogout();
+            }
+        }, 60000); // Проверяем каждую минуту
+
+        return () => clearInterval(interval);
     }, []);
 
     const handleLogin = () => {
         const user = authService.getCurrentUser();
-        setCurrentUser(user);
-        setCurrentPage(user.role === 'ROLE_ADMIN' ? 'admin-products' : 'pharmacy');
+        if (user && !authService.isTokenExpired()) {
+            setCurrentUser(user);
+            if (user.role === 'ROLE_ADMIN') {
+                setCurrentPage('admin-products');
+            } else {
+                setCurrentPage('pharmacy');
+            }
+        } else {
+            // Если токен не валиден, остаемся на странице логина
+            setCurrentPage('login');
+        }
     };
 
     const handleRegister = () => {
@@ -41,7 +75,32 @@ const App: React.FC = () => {
         setCurrentPage('login');
     };
 
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Загрузка...</p>
+            </div>
+        );
+    }
+
+    // Защита маршрутов
     const renderPage = () => {
+        // Если пользователь не авторизован и пытается получить доступ к защищенным страницам
+        if (!currentUser && currentPage !== 'login' && currentPage !== 'register') {
+            setCurrentPage('login');
+            return null;
+        }
+
+        // Проверка прав администратора
+        if (currentUser && currentUser.role !== 'ROLE_ADMIN' &&
+            (currentPage === 'admin-products' || currentPage === 'sales-reports' || currentPage === 'popular-products')) {
+            // Если обычный пользователь пытается получить доступ к админским страницам
+            alert('У вас нет прав для доступа к этой странице');
+            setCurrentPage('pharmacy');
+            return null;
+        }
+
         switch (currentPage) {
             case 'login':
                 return <Login onLogin={handleLogin} onSwitchToRegister={() => setCurrentPage('register')} />;
@@ -50,11 +109,11 @@ const App: React.FC = () => {
             case 'pharmacy':
                 return <ProductList />;
             case 'admin-products':
-                return <ProductManagement />;
+                return currentUser?.role === 'ROLE_ADMIN' ? <ProductManagement /> : null;
             case 'sales-reports':
-                return <SalesReports />;
+                return currentUser?.role === 'ROLE_ADMIN' ? <SalesReports /> : null;
             case 'popular-products':
-                return <PopularProducts />;
+                return currentUser?.role === 'ROLE_ADMIN' ? <PopularProducts /> : null;
             default:
                 return <Login onLogin={handleLogin} onSwitchToRegister={() => setCurrentPage('register')} />;
         }

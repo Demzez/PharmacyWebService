@@ -1,24 +1,33 @@
 import { api } from './api';
-import { Reservation } from '../types';
+import { Reservation, ReservationRequest } from '../types';
+import { authService } from './authService';
 
 export const reservationService = {
-    async createReservation(productId: number, quantity: number, userId: number) {
-        const response = await api.post('/reservations', {
+    async createReservation(productId: number, quantity: number) {
+        // Получаем ID пользователя из текущей сессии
+        const user = authService.getCurrentUser();
+        if (!user) {
+            throw new Error('Пользователь не авторизован');
+        }
+
+        const request: ReservationRequest = {
             productId,
             quantity
-        }, {
-            params: { userId }
-        });
+        };
+
+        // Теперь не передаем userId как параметр, он берется из токена
+        const response = await api.post('/reservations', request);
         return response.data;
     },
 
-    async getUserReservations(userId: number): Promise<Reservation[]> {
-        const response = await api.get(`/reservations/user/${userId}`);
+    async getUserReservations(): Promise<Reservation[]> {
+        // Используем эндпоинт без указания userId в URL
+        const response = await api.get('/reservations/user');
         return response.data;
     },
 
-    async getActiveUserReservations(userId: number): Promise<Reservation[]> {
-        const response = await api.get(`/reservations/user/${userId}/active`);
+    async getActiveUserReservations(): Promise<Reservation[]> {
+        const response = await api.get('/reservations/user/active');
         return response.data;
     },
 

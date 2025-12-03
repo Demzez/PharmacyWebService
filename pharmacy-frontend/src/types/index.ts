@@ -1,11 +1,29 @@
 export interface User {
-    id: number;
+    id?: number;
     username: string;
-    email: string;
-    phone: string;
     role: 'ROLE_ADMIN' | 'ROLE_USER';
-    active: boolean;
-    createdAt: string;
+    email?: string;
+    phone?: string;
+    token?: string;
+}
+
+export interface LoginRequest {
+    username: string;
+    password: string;
+}
+
+export interface RegisterRequest {
+    username: string;
+    password: string;
+    email: string;
+    phone?: string;
+}
+
+export interface AuthResponse {
+    token: string;
+    username: string;
+    role: string;
+    message: string;
 }
 
 export interface Product {
@@ -33,16 +51,4 @@ export interface Reservation {
     expiryDate: string;
     completed: boolean;
     status: string;
-}
-
-export interface LoginRequest {
-    username: string;
-    password: string;
-}
-
-export interface RegisterRequest {
-    username: string;
-    password: string;
-    email: string;
-    phone: string;
 }
