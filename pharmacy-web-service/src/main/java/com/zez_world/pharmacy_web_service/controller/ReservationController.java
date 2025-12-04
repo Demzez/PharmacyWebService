@@ -46,16 +46,16 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getUserReservations(userId));
     }
 
-    @GetMapping("/user/active")
-    public ResponseEntity<List<ReservationResponseDTO>> getActiveUserReservations() {
-        Long userId = getCurrentUserId();
-        return ResponseEntity.ok(reservationService.getActiveUserReservations(userId));
-    }
-
-    @PutMapping("/{reservationId}/complete")
-    public ResponseEntity<ReservationResponseDTO> completeReservation(@PathVariable Long reservationId) {
-        return ResponseEntity.ok(reservationService.completeReservation(reservationId));
-    }
+//    @GetMapping("/user/active")
+//    public ResponseEntity<List<ReservationResponseDTO>> getActiveUserReservations() {
+//        Long userId = getCurrentUserId();
+//        return ResponseEntity.ok(reservationService.getActiveUserReservations(userId));
+//    }
+//
+//    @PutMapping("/{reservationId}/complete")
+//    public ResponseEntity<ReservationResponseDTO> completeReservation(@PathVariable Long reservationId) {
+//        return ResponseEntity.ok(reservationService.completeReservation(reservationId));
+//    }
 
     @DeleteMapping("/{reservationId}/cancel")
     public ResponseEntity<?> cancelReservation(@PathVariable Long reservationId) {

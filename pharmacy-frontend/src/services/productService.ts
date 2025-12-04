@@ -2,7 +2,7 @@ import { api } from './api';
 import { Product } from '../types';
 
 export const productService = {
-    async getCatalog(): Promise<Product[]> {
+    async getPublicCatalog(): Promise<Product[]> {
         const response = await api.get('/products/catalog');
         return response.data;
     },
@@ -34,8 +34,14 @@ export const productService = {
 };
 
 export const adminService = {
+
+    async getCatalog(): Promise<Product[]> {
+        const response = await api.get('/admin/products/all_catalog');
+        return response.data;
+    },
+
     async createProduct(productData: any) {
-        const response = await api.post('/admin/products', productData);
+        const response = await api.post('/admin/products/create', productData);
         return response.data;
     },
 

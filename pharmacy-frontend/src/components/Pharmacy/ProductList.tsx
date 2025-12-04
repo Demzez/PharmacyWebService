@@ -16,7 +16,7 @@ const ProductList: React.FC = () => {
     const loadProducts = async () => {
         try {
             setLoading(true);
-            const data = await productService.getCatalog();
+            const data = await productService.getPublicCatalog();
             setProducts(data);
             setFilteredProducts(data);
         } catch (error) {

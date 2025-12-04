@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './ProductManagement.css'
 import { Product } from '../../types';
-import { adminService, productService } from '../../services/productService';
+import { adminService } from '../../services/productService';
 
 const ProductManagement: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -11,11 +12,12 @@ const ProductManagement: React.FC = () => {
         manufacturer: '',
         releaseForm: '',
         expiryDate: '',
-        prescriptionStatus: 'NON_PRESCRIPTION',
+        prescriptionStatus: 'NON_PRESCRIPTION' as 'NON_PRESCRIPTION' | 'PRESCRIPTION',
         price: 0,
         stockQuantity: 0,
         activeSubstance: '',
-        category: ''
+        category: '',
+        visible: true // Только visible
     });
 
     useEffect(() => {
@@ -24,10 +26,29 @@ const ProductManagement: React.FC = () => {
 
     const loadProducts = async () => {
         try {
-            const data = await productService.getCatalog();
+            const data = await adminService.getCatalog();
             setProducts(data);
         } catch (error) {
             console.error('Error loading products:', error);
+        }
+    };
+
+    // Функция для переключения только visibility статуса
+    const toggleVisibility = async (id: number) => {
+        try {
+            // Отправляем запрос на бэкенд для переключения visibility
+            await adminService.toggleProductVisibility(id);
+
+            // Обновляем состояние локально - ТОЛЬКО поле visible
+            setProducts(prevProducts =>
+                prevProducts.map(product =>
+                    product.id === id
+                        ? { ...product, visible: !product.visible }
+                        : product
+                )
+            );
+        } catch (error) {
+            console.error('Error toggling visibility:', error);
         }
     };
 
@@ -50,7 +71,8 @@ const ProductManagement: React.FC = () => {
                 price: 0,
                 stockQuantity: 0,
                 activeSubstance: '',
-                category: ''
+                category: '',
+                visible: true
             });
             loadProducts();
         } catch (error) {
@@ -69,7 +91,8 @@ const ProductManagement: React.FC = () => {
             price: product.price,
             stockQuantity: product.stockQuantity,
             activeSubstance: product.activeSubstance,
-            category: product.category || ''
+            category: product.category || '',
+            visible: product.visible // Используем visible
         });
         setShowForm(true);
     };
@@ -132,37 +155,36 @@ const ProductManagement: React.FC = () => {
                                     />
                                 </div>
                             </div>
-
                             <div className="form-row">
-                                <div className="form-group">
-                                    <label>Рецептурный статус:</label>
-                                    <select
-                                        value={formData.prescriptionStatus}
-                                        onChange={(e) => setFormData({...formData, prescriptionStatus: e.target.value})}
-                                    >
-                                        <option value="NON_PRESCRIPTION">Без рецепта</option>
-                                        <option value="PRESCRIPTION">По рецепту</option>
-                                    </select>
-                                </div>
+
                                 <div className="form-group">
                                     <label>Цена:</label>
                                     <input
                                         type="number"
                                         step="0.01"
+                                        min="0"
                                         value={formData.price}
-                                        onChange={(e) => setFormData({...formData, price: parseFloat(e.target.value)})}
+                                        onChange={(e) => setFormData({...formData, price: parseFloat(e.target.value) || 0})}
                                         required
                                     />
                                 </div>
+                                <div className="form-group">
+                                    <label>Категория:</label>
+                                    <input
+                                        type="text"
+                                        value={formData.category}
+                                        onChange={(e) => setFormData({...formData, category: e.target.value})}
+                                    />
+                                </div>
                             </div>
-
                             <div className="form-row">
                                 <div className="form-group">
                                     <label>Количество на складе:</label>
                                     <input
                                         type="number"
+                                        min="0"
                                         value={formData.stockQuantity}
-                                        onChange={(e) => setFormData({...formData, stockQuantity: parseInt(e.target.value)})}
+                                        onChange={(e) => setFormData({...formData, stockQuantity: parseInt(e.target.value) || 0})}
                                         required
                                     />
                                 </div>
@@ -176,16 +198,19 @@ const ProductManagement: React.FC = () => {
                                     />
                                 </div>
                             </div>
+                            <div className="form-row">
 
-                            <div className="form-group">
-                                <label>Категория:</label>
-                                <input
-                                    type="text"
-                                    value={formData.category}
-                                    onChange={(e) => setFormData({...formData, category: e.target.value})}
-                                />
                             </div>
-
+                            <div className="form-group">
+                                <label>Рецептурный статус:</label>
+                                <select
+                                    value={formData.prescriptionStatus}
+                                    onChange={(e) => setFormData({...formData, prescriptionStatus: e.target.value as 'PRESCRIPTION' | 'NON_PRESCRIPTION'})}
+                                >
+                                    <option value="NON_PRESCRIPTION">Без рецепта</option>
+                                    <option value="PRESCRIPTION">По рецепту</option>
+                                </select>
+                            </div>
                             <div className="form-actions">
                                 <button type="submit" className="btn-primary">
                                     {editingProduct ? 'Обновить' : 'Создать'}
@@ -214,7 +239,7 @@ const ProductManagement: React.FC = () => {
                         <th>Производитель</th>
                         <th>Цена</th>
                         <th>В наличии</th>
-                        <th>Статус</th>
+                        <th>Статус видимости</th>
                         <th>Действия</th>
                     </tr>
                     </thead>
@@ -223,12 +248,16 @@ const ProductManagement: React.FC = () => {
                         <tr key={product.id}>
                             <td>{product.name}</td>
                             <td>{product.manufacturer}</td>
-                            <td>${product.price}</td>
+                            <td>${product.price.toFixed(2)}</td>
                             <td>{product.stockQuantity}</td>
                             <td>
-                  <span className={`status ${product.available ? 'available' : 'unavailable'}`}>
-                    {product.available ? 'Доступен' : 'Не доступен'}
-                  </span>
+                                <button
+                                    onClick={() => toggleVisibility(product.id)}
+                                    className={`status-toggle-btn ${product.visible ? 'visible' : 'hidden'}`}
+                                    title="Кликните чтобы изменить видимость товара"
+                                >
+                                    {product.visible ? 'Видимый' : 'Скрытый'}
+                                </button>
                             </td>
                             <td>
                                 <button

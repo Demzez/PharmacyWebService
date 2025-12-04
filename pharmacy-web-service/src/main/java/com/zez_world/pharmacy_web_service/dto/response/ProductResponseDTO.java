@@ -16,6 +16,7 @@ public class ProductResponseDTO {
     private String activeSubstance;
     private String category;
     private boolean available;
+    private boolean visible;
 
     // Для публичного каталога
     public static ProductResponseDTO fromPublic(Product product) {
@@ -30,6 +31,7 @@ public class ProductResponseDTO {
         dto.activeSubstance = product.getActiveSubstance();
         dto.category = product.getCategory();
         dto.available = product.getStockQuantity() > 0;
+        dto.visible = product.isVisible();
         return dto;
     }
 
@@ -52,4 +54,5 @@ public class ProductResponseDTO {
     public String getActiveSubstance() { return activeSubstance; }
     public String getCategory() { return category; }
     public boolean isAvailable() { return available; }
+    public boolean isVisible() { return visible; }
 }

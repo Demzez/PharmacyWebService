@@ -18,6 +18,13 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    public List<ProductResponseDTO> getCatalog() {
+        return productRepository.findAll()
+                .stream()
+                .map(ProductResponseDTO::fromPublic)
+                .collect(Collectors.toList());
+    }
+
     public List<ProductResponseDTO> getPublicCatalog() {
         return productRepository.findByVisibleTrue()
                 .stream()

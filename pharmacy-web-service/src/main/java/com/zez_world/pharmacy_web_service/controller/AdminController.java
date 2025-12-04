@@ -32,30 +32,35 @@ public class AdminController {
     private UserService userService;
 
     // Управление пользователями
-    @PostMapping("/users/create")
-    public ResponseEntity<UserResponseDTO> createAdmin(@RequestBody UserCreateDTO userDto) {
-        return ResponseEntity.ok(userService.createAdmin(userDto));
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
-
-
-    @PutMapping("/users/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserCreateDTO userDto) {
-        return ResponseEntity.ok(userService.updateUser(id, userDto));
-    }
-
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
-        userService.deactivateUser(id);
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("/users/create")
+//    public ResponseEntity<UserResponseDTO> createAdmin(@RequestBody UserCreateDTO userDto) {
+//        return ResponseEntity.ok(userService.createAdmin(userDto));
+//    }
+//
+//    @GetMapping("/users")
+//    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+//        return ResponseEntity.ok(userService.getAllUsers());
+//    }
+//
+//
+//    @PutMapping("/users/{id}")
+//    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserCreateDTO userDto) {
+//        return ResponseEntity.ok(userService.updateUser(id, userDto));
+//    }
+//
+//    @DeleteMapping("/users/{id}")
+//    public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
+//        userService.deactivateUser(id);
+//        return ResponseEntity.ok().build();
+//    }
 
     // Управление продуктами
-    @PostMapping("/products")
+    @GetMapping("/products/all_catalog")
+    public ResponseEntity<List<ProductResponseDTO>> getCatalog() {
+        return ResponseEntity.ok(productService.getCatalog());
+    }
+
+    @PostMapping("/products/create")
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductCreateDTO productDto) {
         return ResponseEntity.ok(productService.createProduct(productDto));
     }
@@ -69,22 +74,23 @@ public class AdminController {
     public ResponseEntity<ProductResponseDTO> toggleProductVisibility(@PathVariable Long id) {
         return ResponseEntity.ok(productService.toggleProductVisibility(id));
     }
-
-    // Отчеты
-    @GetMapping("/reports/sales")
-    public ResponseEntity<Map<String, Object>> getSalesReport(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return ResponseEntity.ok(adminService.getSalesReport(startDate, endDate));
-    }
-
-    @GetMapping("/reports/popular")
-    public ResponseEntity<Map<String, Object>> getPopularProducts() {
-        return ResponseEntity.ok(adminService.getPopularProducts());
-    }
-
-    @GetMapping("/statistics")
-    public ResponseEntity<Map<String, Object>> getSystemStatistics() {
-        return ResponseEntity.ok(adminService.getSystemStatistics());
-    }
+//
+//    // Отчеты
+//    @GetMapping("/reports/sales")
+//    public ResponseEntity<Map<String, Object>> getSalesReport(
+//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+//        return ResponseEntity.ok(adminService.getSalesReport(startDate, endDate));
+//    }
+//
+//    @GetMapping("/reports/popular")
+//    public ResponseEntity<Map<String, Object>> getPopularProducts() {
+//        return ResponseEntity.ok(adminService.getPopularProducts());
+//    }
+//
+//
+//    @GetMapping("/statistics")
+//    public ResponseEntity<Map<String, Object>> getSystemStatistics() {
+//        return ResponseEntity.ok(adminService.getSystemStatistics());
+//    }
 }

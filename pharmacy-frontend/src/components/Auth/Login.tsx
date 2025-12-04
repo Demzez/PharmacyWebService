@@ -13,7 +13,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSwitchToRegister }) => {
     });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    // const navigate = useNavigate(); // Если используете React Router
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,9 +24,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSwitchToRegister }) => {
 
             // Успешный логин
             onLogin();
-
-            // Если используете React Router:
-            // navigate('/pharmacy');
 
         } catch (err: any) {
             // Обработка ошибок

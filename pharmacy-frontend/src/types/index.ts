@@ -38,6 +38,7 @@ export interface Product {
     activeSubstance: string;
     category: string;
     available: boolean;
+    visible: boolean;
 }
 
 export interface Reservation {
