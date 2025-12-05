@@ -40,6 +40,11 @@ export const adminService = {
         return response.data;
     },
 
+    async adminSearchProducts(query: string): Promise<Product[]> {
+        const response = await api.get(`/admin/products/search?query=${encodeURIComponent(query)}`);
+        return response.data;
+    },
+
     async createProduct(productData: any) {
         const response = await api.post('/admin/products/create', productData);
         return response.data;

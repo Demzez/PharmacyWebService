@@ -46,6 +46,13 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public List<ProductResponseDTO> searchAdminProducts(String query) {
+        return productRepository.universalAdminSearch(query)
+                .stream()
+                .map(ProductResponseDTO::fromPublic)
+                .collect(Collectors.toList());
+    }
+
     public List<ProductResponseDTO> searchByName(String name) {
         return productRepository.findByNameContainingIgnoreCase(name)
                 .stream()

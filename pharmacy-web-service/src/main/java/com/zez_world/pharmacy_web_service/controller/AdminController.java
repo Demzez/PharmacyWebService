@@ -60,6 +60,11 @@ public class AdminController {
         return ResponseEntity.ok(productService.getCatalog());
     }
 
+    @GetMapping("/products/search")
+    public ResponseEntity<List<ProductResponseDTO>> searchAdminProducts(@RequestParam String query) {
+        return ResponseEntity.ok(productService.searchAdminProducts(query));
+    }
+
     @PostMapping("/products/create")
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductCreateDTO productDto) {
         return ResponseEntity.ok(productService.createProduct(productDto));

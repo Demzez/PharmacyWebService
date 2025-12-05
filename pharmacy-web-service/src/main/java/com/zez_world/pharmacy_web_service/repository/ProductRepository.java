@@ -29,6 +29,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "LOWER(p.manufacturer) LIKE LOWER(CONCAT('%', :query, '%')))")
     List<Product> universalSearch(@Param("query") String query);
 
+    @Query("SELECT p FROM Product p WHERE (" +
+            "LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+            "LOWER(p.activeSubstance) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+            "LOWER(p.category) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+            "LOWER(p.manufacturer) LIKE LOWER(CONCAT('%', :query, '%')))")
+    List<Product> universalAdminSearch(@Param("query") String query);
+
     @Query("SELECT p FROM Product p WHERE p.visible = true AND p.stockQuantity > 0 ORDER BY p.stockQuantity DESC LIMIT 10")
     List<Product> findPopularProducts();
 }

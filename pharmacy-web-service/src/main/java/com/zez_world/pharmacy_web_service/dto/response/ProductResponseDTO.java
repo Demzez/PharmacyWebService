@@ -25,6 +25,7 @@ public class ProductResponseDTO {
         dto.name = product.getName();
         dto.manufacturer = product.getManufacturer();
         dto.releaseForm = product.getReleaseForm();
+        dto.expiryDate = product.getExpiryDate();
         dto.prescriptionStatus = product.getPrescriptionStatus();
         dto.price = product.getPrice();
         dto.stockQuantity = product.getStockQuantity();

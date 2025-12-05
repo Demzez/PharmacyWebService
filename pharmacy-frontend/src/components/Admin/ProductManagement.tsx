@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './ProductManagement.css'
 import { Product } from '../../types';
-import { adminService } from '../../services/productService';
+import {adminService} from '../../services/productService';
+import SearchBar from '../Pharmacy/SearchBar'
 
 const ProductManagement: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [formData, setFormData] = useState({
@@ -28,8 +30,23 @@ const ProductManagement: React.FC = () => {
         try {
             const data = await adminService.getCatalog();
             setProducts(data);
+            setFilteredProducts(data);
         } catch (error) {
             console.error('Error loading products:', error);
+        }
+    };
+
+    const handleSearch = async (query: string) => {
+        if (!query.trim()) {
+            setFilteredProducts(products);
+            return;
+        }
+
+        try {
+            const results = await adminService.adminSearchProducts(query);
+            setFilteredProducts(results);
+        } catch (error) {
+            console.error('Search error:', error);
         }
     };
 
@@ -42,6 +59,14 @@ const ProductManagement: React.FC = () => {
             // Обновляем состояние локально - ТОЛЬКО поле visible
             setProducts(prevProducts =>
                 prevProducts.map(product =>
+                    product.id === id
+                        ? { ...product, visible: !product.visible }
+                        : product
+                )
+            );
+
+            setFilteredProducts(prevFilteredProducts =>
+                prevFilteredProducts.map(product =>
                     product.id === id
                         ? { ...product, visible: !product.visible }
                         : product
@@ -107,6 +132,9 @@ const ProductManagement: React.FC = () => {
                 >
                     Добавить товар
                 </button>
+            </div>
+            <div>
+                <SearchBar onSearch={handleSearch} />
             </div>
 
             {showForm && (
@@ -244,7 +272,7 @@ const ProductManagement: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {products.map(product => (
+                    {filteredProducts.map(product => (
                         <tr key={product.id}>
                             <td>{product.name}</td>
                             <td>{product.manufacturer}</td>
