@@ -16,7 +16,7 @@ export const reservationService = {
         };
 
         // Теперь не передаем userId как параметр, он берется из токена
-        const response = await api.post('/reservations', request);
+        const response = await api.post('/reservations/create', request);
         return response.data;
     },
 

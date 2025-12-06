@@ -27,7 +27,7 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createReservation(@RequestBody ReservationRequestDTO request) {
         try {
             Long userId = getCurrentUserId();

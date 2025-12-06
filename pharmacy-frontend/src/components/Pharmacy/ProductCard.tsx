@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { Product } from '../../types';
 import { productService } from '../../services/productService';
 import { reservationService } from '../../services/reservationService';
+import {authService} from "../../services/authService";
 
 interface ProductCardProps {
     product: Product;
     onReservationSuccess: () => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess}) => {
     const [quantity, setQuantity] = useState(1);
     const [showAnalogs, setShowAnalogs] = useState(false);
     const [analogs, setAnalogs] = useState<Product[]>([]);
     const [loadingAnalogs, setLoadingAnalogs] = useState(false);
     const [reserving, setReserving] = useState(false);
+    const user = authService.getCurrentUser();
+    const isAdmin = user?.role == 'ROLE_ADMIN';
+
+
 
     const handleReservation = async () => {
         setReserving(true);
@@ -87,7 +92,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess
                     <button
                         onClick={handleReservation}
                         className="btn-primary"
-                        disabled={quantity > product.stockQuantity || reserving}
+                        disabled={quantity > product.stockQuantity || reserving || isAdmin}
                     >
                         {reserving ? 'Бронирование...' : 'Забронировать'}
                     </button>

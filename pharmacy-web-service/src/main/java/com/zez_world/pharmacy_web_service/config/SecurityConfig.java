@@ -29,7 +29,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/products/**").permitAll()
-                        .requestMatchers("/api/reservations/**").authenticated()
+                        .requestMatchers("/api/reservations/create").hasRole("USER")
+                        .requestMatchers("/api/reservations/cancel").hasRole("USER")
+                        .requestMatchers("/api/reservations/user").authenticated()
+                        //.requestMatchers("/api/reservations/comlete").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
