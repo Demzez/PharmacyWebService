@@ -260,15 +260,15 @@ const ProductManagement: React.FC = () => {
             )}
 
             <div className="products-table">
-                <table>
+                <table style={{ tableLayout: 'fixed', width: '100%' }}>
                     <thead>
                     <tr>
-                        <th>Название</th>
-                        <th>Производитель</th>
-                        <th>Цена</th>
-                        <th>В наличии</th>
-                        <th>Статус видимости</th>
-                        <th>Действия</th>
+                        <th style={{ width: '15%' }}>Название</th>
+                        <th style={{ width: '18%' }}>Производитель</th>
+                        <th style={{ width: '10%' }}>Цена</th>
+                        <th style={{ width: '10%' }}>В наличии</th>
+                        <th style={{ width: '15%' }}>Статус видимости</th>
+                        <th style={{ width: '15%' }}>Действия</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -276,7 +276,7 @@ const ProductManagement: React.FC = () => {
                         <tr key={product.id}>
                             <td>{product.name}</td>
                             <td>{product.manufacturer}</td>
-                            <td>${product.price.toFixed(2)}</td>
+                            <td>{product.price.toFixed(2)} BYN</td>
                             <td>{product.stockQuantity}</td>
                             <td>
                                 <button

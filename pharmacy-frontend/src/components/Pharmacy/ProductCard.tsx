@@ -72,7 +72,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess
                 <p><strong>Действующее вещество:</strong> {product.activeSubstance}</p>
                 <p><strong>Категория:</strong> {product.category || 'Не указана'}</p>
                 <p><strong>Рецептурный:</strong> {product.prescriptionStatus === 'PRESCRIPTION' ? 'Да' : 'Нет'}</p>
-                <p><strong>Цена:</strong> ${product.price.toFixed(2)}</p>
+                <p><strong>Цена:</strong> {product.price.toFixed(2)} BYN</p>
                 <p><strong>В наличии:</strong> {product.stockQuantity} шт.</p>
             </div>
 
@@ -112,18 +112,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess
                     {analogs.map(analog => (
                         <div key={analog.id} className="analog-card">
                             <div className="analog-info">
-                                <span className="analog-name">{analog.name}</span>
-                                <span className="analog-price">${analog.price.toFixed(2)}</span>
-                                <span className="analog-manufacturer">{analog.manufacturer}</span>
+                                <h4 className="analog-name">
+                                    {analog.name}
+                                </h4>
                             </div>
                             <button
                                 className="btn-primary btn-small"
+                                style={{
+                                    width: '140px',
+                                    height: '36px',
+                                    fontSize: '14px',
+                                    padding: '8px 12px',
+                                    flexShrink: 0 // Предотвращает сжатие кнопки
+                                }}
                                 onClick={() => {
-                                    // Здесь можно добавить логику для переключения на аналог
-                                    alert(`Выбран аналог: ${analog.name}`);
+                                    // Копирование имени в буфер обмена
+                                    navigator.clipboard.writeText(analog.name)
                                 }}
                             >
-                                Выбрать
+                                Копировать имя
                             </button>
                         </div>
                     ))}

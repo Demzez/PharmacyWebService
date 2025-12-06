@@ -98,6 +98,10 @@ public class ReservationService {
         for (Reservation reservation : expiredReservations) {
             cancelReservation(reservation.getId());
         }
+
+        for (Reservation reservation : reservationRepository.findByCompletedTrue()) {
+            reservationRepository.delete(reservation);
+        }
     }
 
     public Optional<ReservationResponseDTO> getReservationById(Long id) {
