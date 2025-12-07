@@ -3,10 +3,12 @@ package com.zez_world.pharmacy_web_service.controller;
 import com.zez_world.pharmacy_web_service.dto.request.ProductCreateDTO;
 import com.zez_world.pharmacy_web_service.dto.request.UserCreateDTO;
 import com.zez_world.pharmacy_web_service.dto.response.ProductResponseDTO;
+import com.zez_world.pharmacy_web_service.dto.response.ReservationResponseDTO;
 import com.zez_world.pharmacy_web_service.dto.response.UserResponseDTO;
 import com.zez_world.pharmacy_web_service.entity.Role;
 import com.zez_world.pharmacy_web_service.service.AdminService;
 import com.zez_world.pharmacy_web_service.service.ProductService;
+import com.zez_world.pharmacy_web_service.service.ReservationService;
 import com.zez_world.pharmacy_web_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +26,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Autowired
     private ProductService productService;
@@ -79,7 +84,13 @@ public class AdminController {
     public ResponseEntity<ProductResponseDTO> toggleProductVisibility(@PathVariable Long id) {
         return ResponseEntity.ok(productService.toggleProductVisibility(id));
     }
-//
+
+    // Управление бронированиями
+    @GetMapping("/user/reservations/{userLogin}")
+    public ResponseEntity<List<ReservationResponseDTO>> getUserReservations(@PathVariable String userLogin) {
+        return ResponseEntity.ok(reservationService.getUserReservations(userService.getUserIdByUsername(userLogin)));
+    }
+
 //    // Отчеты
 //    @GetMapping("/reports/sales")
 //    public ResponseEntity<Map<String, Object>> getSalesReport(

@@ -1,5 +1,5 @@
 import { api } from './api';
-import { Product } from '../types';
+import { Product, Reservation } from '../types';
 
 export const productService = {
     async getPublicCatalog(): Promise<Product[]> {
@@ -72,8 +72,8 @@ export const adminService = {
         return response.data;
     },
 
-    async getSystemStatistics() {
-        const response = await api.get('/admin/statistics');
+    async getUserReservationsByLogin(userLogin: string): Promise<Reservation[]> {
+        const response = await api.get(`/admin/user/reservations/${encodeURIComponent(userLogin)}`);
         return response.data;
-    }
+    },
 };

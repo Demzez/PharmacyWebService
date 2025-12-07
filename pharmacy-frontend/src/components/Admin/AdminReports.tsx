@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SalesReports: React.FC = () => {
+const AdminReports: React.FC = () => {
     return (
         <div className="admin-page">
             <h1>Отчеты по продажам</h1>
@@ -9,4 +9,4 @@ const SalesReports: React.FC = () => {
     );
 };
 
-export default SalesReports;
+export default AdminReports;

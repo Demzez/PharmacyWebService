@@ -4,14 +4,14 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ProductList from './components/Pharmacy/ProductList';
 import ProductManagement from './components/Admin/ProductManagement';
-import SalesReports from './components/Admin/SalesReports';
-import PopularProducts from './components/Admin/PopularProducts';
+import UserReservationsManagement from './components/Admin/UserReservationsManagement';
+import AdminReports from './components/Admin/AdminReports';
 import MyReservations from './components/Pharmacy/MyReservations';
 import { authService } from './services/authService';
 import { User } from './types';
 import './App.css';
 
-export type Page = 'login' | 'register' | 'pharmacy' | 'my-reservations' | 'admin-products' | 'sales-reports' | 'popular-products' ;
+export type Page = 'login' | 'register' | 'pharmacy' | 'my-reservations' | 'admin-products' | 'admin-reports' | 'user-reservations';;
 
 const App: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<Page>('login');
@@ -95,7 +95,7 @@ const App: React.FC = () => {
 
         // Проверка прав администратора
         if (currentUser && currentUser.role !== 'ROLE_ADMIN' &&
-            (currentPage === 'admin-products' || currentPage === 'sales-reports' || currentPage === 'popular-products')) {
+            (currentPage === 'admin-products' || currentPage === 'admin-reports' || currentPage === 'user-reservations')) {
             // Если обычный пользователь пытается получить доступ к админским страницам
             alert('У вас нет прав для доступа к этой странице');
             setCurrentPage('pharmacy');
@@ -113,10 +113,10 @@ const App: React.FC = () => {
                 return <MyReservations />;
             case 'admin-products':
                 return currentUser?.role === 'ROLE_ADMIN' ? <ProductManagement /> : null;
-            case 'sales-reports':
-                return currentUser?.role === 'ROLE_ADMIN' ? <SalesReports /> : null;
-            case 'popular-products':
-                return currentUser?.role === 'ROLE_ADMIN' ? <PopularProducts /> : null;
+            case 'admin-reports':
+                return currentUser?.role === 'ROLE_ADMIN' ? <AdminReports /> : null;
+            case 'user-reservations':
+                return currentUser?.role === 'ROLE_ADMIN' ? <UserReservationsManagement /> : null;
             default:
                 return <Login onLogin={handleLogin} onSwitchToRegister={() => setCurrentPage('register')} />;
         }

@@ -1,0 +1,414 @@
+.user-reservations-management {
+    margin-top: 40px;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.user-reservations-management h1 {
+    margin-bottom: 30px;
+    color: #2c3e50;
+    text-align: center;
+    font-size: 28px;
+}
+
+/* Панель поиска */
+.search-panel {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.search-input-group label {
+    font-weight: 600;
+    color: #495057;
+    min-width: 120px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.search-hint {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 10px 0 0 0;
+    font-style: italic;
+}
+
+/* Кнопки */
+.btn-primary {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 180px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #357ae8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-primary:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Сообщения */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px 0;
+    border-left: 4px solid #dc3545;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px 0;
+    border-left: 4px solid #28a745;
+}
+
+/* Список бронирований */
+.reservations-section {
+    margin-top: 30px;
+}
+
+.reservations-section h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reservation-count {
+    background: #6c757d;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.reservations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Карточка бронирования */
+.reservation-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+}
+
+.reservation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.product-info h3 {
+    margin: 0 0 8px 0;
+    color: #212529;
+    font-size: 18px;
+}
+
+.product-id {
+    color: #6c757d;
+    font-size: 14px;
+    background: #f8f9fa;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.status-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.quantity {
+    color: #495057;
+    font-weight: 500;
+}
+
+/* Детали бронирования */
+.reservation-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-label {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.detail-value {
+    color: #212529;
+    font-weight: 500;
+}
+
+/* Действия с бронированием */
+.reservation-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-complete, .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-complete {
+    background: #28a745;
+    color: white;
+}
+
+.btn-complete:hover {
+    background: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+}
+
+.btn-cancel {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+}
+
+.no-actions-message {
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+/* Статусы */
+.status-active {
+    border-left: 4px solid #17a2b8;
+}
+
+.status-active .status-badge {
+    background: #17a2b8;
+    color: white;
+}
+
+.status-completed {
+    border-left: 4px solid #28a745;
+}
+
+.status-completed .status-badge {
+    background: #28a745;
+    color: white;
+}
+
+.status-expired {
+    border-left: 4px solid #ffc107;
+}
+
+.status-expired .status-badge {
+    background: #ffc107;
+    color: #212529;
+}
+
+.status-cancelled {
+    border-left: 4px solid #6c757d;
+}
+
+.status-cancelled .status-badge {
+    background: #6c757d;
+    color: white;
+}
+
+/* Статистика */
+.reservations-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #212529;
+}
+
+/* Сообщения и инструкции */
+.no-reservations {
+    text-align: center;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.no-reservations p {
+    color: #6c757d;
+    font-size: 18px;
+}
+
+.instructions {
+    background: #e8f4ff;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 30px;
+    border-left: 4px solid #4a90e2;
+}
+
+.instructions h3 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+.instructions ol {
+    margin-left: 20px;
+    color: #495057;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+}
+
+.instructions .note {
+    color: #6c757d;
+    font-style: italic;
+    margin-top: 15px;
+    font-size: 14px;
+    border-top: 1px solid #cce5ff;
+    padding-top: 15px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .search-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input-group label {
+        margin-bottom: 5px;
+    }
+
+    .reservation-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .status-info {
+        align-items: flex-start;
+    }
+
+    .reservation-actions {
+        flex-direction: column;
+    }
+
+    .reservations-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .reservation-details {
+        grid-template-columns: 1fr;
+    }
+}

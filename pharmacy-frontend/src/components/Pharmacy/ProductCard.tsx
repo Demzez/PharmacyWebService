@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../../types';
 import { productService } from '../../services/productService';
 import { reservationService } from '../../services/reservationService';
-import {authService} from "../../services/authService";
+import { authService } from "../../services/authService";
 
 interface ProductCardProps {
     product: Product;

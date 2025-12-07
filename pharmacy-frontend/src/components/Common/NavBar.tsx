@@ -21,7 +21,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, onNavigate }) =>
             <div className="nav-brand">
                 <h2>💊zezWorld</h2>
             </div>
-
             <div className="nav-links">
                 {currentUser ? (
                     <>
@@ -39,11 +38,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, onNavigate }) =>
                                 <button onClick={() => onNavigate('admin-products')} className="nav-link">
                                     Управление товарами
                                 </button>
-                                <button onClick={() => onNavigate('sales-reports')} className="nav-link">
-                                    Отчеты по продажам
+                                <button onClick={() => onNavigate('user-reservations')} className="nav-link">
+                                    Управление бронированиями
                                 </button>
-                                <button onClick={() => onNavigate('popular-products')} className="nav-link">
-                                    Популярные товары
+                                <button onClick={() => onNavigate('admin-reports')} className="nav-link">
+                                    Отчеты
                                 </button>
                             </>
                         )}

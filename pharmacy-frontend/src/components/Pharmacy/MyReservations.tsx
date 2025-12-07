@@ -77,7 +77,7 @@ const MyReservations: React.FC = () => {
                                 <div>
                                     <strong>{res.productName}</strong>
                                     <span className={`status ${getStatusClass(res.status)}`}>
-                    {res.status === 'ACTIVE' && 'Активно'}
+                                        {res.status === 'ACTIVE' && 'Активно'}
                                         {res.status === 'EXPIRED' && 'Просрочено'}
                                         {res.status === 'COMPLETED' && 'Выкуплено'}
                                     </span>
