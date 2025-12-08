@@ -21,4 +21,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT COUNT(r) FROM Reservation r WHERE r.product.id = :productId AND r.completed = false")
     Long countActiveReservationsByProduct(@Param("productId") Long productId);
+
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.completed = false")
+    Integer countByCompletedFalse();
 }

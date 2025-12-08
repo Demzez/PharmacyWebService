@@ -58,3 +58,17 @@ export interface ReservationRequest {
     productId: number;
     quantity: number;
 }
+
+export interface BasicProductInfo {
+    id: number;
+    name: string;
+    manufacturer: string;
+    salesCount: number;
+}
+
+export interface BasicStatistics {
+    totalUsers: number;
+    totalProducts: number;
+    activeReservations: number;
+    totalRevenue: number;
+}

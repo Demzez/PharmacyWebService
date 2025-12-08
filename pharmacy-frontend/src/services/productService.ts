@@ -60,15 +60,13 @@ export const adminService = {
         return response.data;
     },
 
-    async getSalesReport(startDate: string, endDate: string) {
-        const response = await api.get('/admin/reports/sales', {
-            params: { startDate, endDate }
-        });
+    async getPopularProducts() {
+        const response = await api.get('/admin/reports/popular');
         return response.data;
     },
 
-    async getPopularProducts() {
-        const response = await api.get('/admin/reports/popular');
+    async getSystemStatistics() {
+        const response = await api.get('/admin/statistics');
         return response.data;
     },
 

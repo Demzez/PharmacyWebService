@@ -1,23 +1,18 @@
 package com.zez_world.pharmacy_web_service.controller;
 
 import com.zez_world.pharmacy_web_service.dto.request.ProductCreateDTO;
-import com.zez_world.pharmacy_web_service.dto.request.UserCreateDTO;
 import com.zez_world.pharmacy_web_service.dto.response.ProductResponseDTO;
 import com.zez_world.pharmacy_web_service.dto.response.ReservationResponseDTO;
-import com.zez_world.pharmacy_web_service.dto.response.UserResponseDTO;
-import com.zez_world.pharmacy_web_service.entity.Role;
+import com.zez_world.pharmacy_web_service.dto.response.reports.PopularDTO;
+import com.zez_world.pharmacy_web_service.dto.response.reports.StatisticsDTO;
 import com.zez_world.pharmacy_web_service.service.AdminService;
 import com.zez_world.pharmacy_web_service.service.ProductService;
 import com.zez_world.pharmacy_web_service.service.ReservationService;
 import com.zez_world.pharmacy_web_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -91,22 +86,15 @@ public class AdminController {
         return ResponseEntity.ok(reservationService.getUserReservations(userService.getUserIdByUsername(userLogin)));
     }
 
-//    // Отчеты
-//    @GetMapping("/reports/sales")
-//    public ResponseEntity<Map<String, Object>> getSalesReport(
-//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-//        return ResponseEntity.ok(adminService.getSalesReport(startDate, endDate));
-//    }
-//
-//    @GetMapping("/reports/popular")
-//    public ResponseEntity<Map<String, Object>> getPopularProducts() {
-//        return ResponseEntity.ok(adminService.getPopularProducts());
-//    }
-//
-//
-//    @GetMapping("/statistics")
-//    public ResponseEntity<Map<String, Object>> getSystemStatistics() {
-//        return ResponseEntity.ok(adminService.getSystemStatistics());
-//    }
+    @GetMapping("/reports/popular")
+    public ResponseEntity<List<PopularDTO>> getPopularProducts() {
+        List<PopularDTO> popularProducts = adminService.getPopularProducts();
+        return ResponseEntity.ok(popularProducts);
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<StatisticsDTO> getSystemStatistics() {
+        StatisticsDTO statistics = adminService.getSystemStatistics();
+        return ResponseEntity.ok(statistics);
+    }
 }

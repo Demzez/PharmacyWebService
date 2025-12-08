@@ -29,10 +29,10 @@ public class ReservationService {
     private UserService userService;
 
     @Autowired
-    private AdminService adminService;
+    private ProductService productService;
 
     @Autowired
-    private ProductService productService;
+    private SalesService salesService;
 
     public ReservationResponseDTO createReservation(Long userId, ReservationRequestDTO reservationDto) {
         User user = userService.findUserById(userId)
@@ -74,7 +74,7 @@ public class ReservationService {
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
         reservation.setCompleted(true);
-        adminService.recordSale(reservation.getProduct().getId(), reservation.getQuantity(), reservation.getProduct().getPrice());
+        salesService.recordSale(reservation.getProduct().getId(), reservation.getQuantity(), reservation.getProduct().getPrice());
         Reservation updatedReservation = reservationRepository.save(reservation);
         return ReservationResponseDTO.from(updatedReservation);
     }
@@ -87,6 +87,10 @@ public class ReservationService {
         productService.updateStockQuantity(reservation.getProduct().getId(), reservation.getQuantity());
 
         reservationRepository.delete(reservation);
+    }
+
+    public int countActiveReservations() {
+        return reservationRepository.countByCompletedFalse();
     }
 
     // Автоматическая отмена просроченных бронирований
