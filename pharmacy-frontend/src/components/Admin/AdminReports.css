@@ -75,7 +75,7 @@
 }
 
 .metric-card.revenue {
-    border-left: 4px solid #10b981;
+    border-left: solid #10b981;
 }
 
 .metric-card.users {
@@ -83,7 +83,7 @@
 }
 
 .metric-card.products {
-    border-left: 4px solid #f59e0b;
+    border-left: solid #f59e0b;
 }
 
 .metric-card.reservations {
@@ -91,19 +91,19 @@
 }
 
 .metric-icon {
-    font-size: 2.5rem;
-    width: 70px;
-    height: 70px;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 30%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
 }
 
 .metric-info {
-    flex: 1;
+    flex: 0.5;
 }
 
 .metric-info h3 {
@@ -115,7 +115,7 @@
 
 .metric-value {
     color: #2d3748;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
     line-height: 1.2;

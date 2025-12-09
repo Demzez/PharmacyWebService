@@ -42,7 +42,7 @@ const AdminReports: React.FC = () => {
             let hasRealData = false;
 
             if (productsData.status === 'fulfilled') {
-                const data = productsData.value as any[];
+                const data = productsData.value;
                 if (Array.isArray(data) && data.length > 0) {
                     const formattedProducts = data.slice(0, 5).map(item => ({
                         id: item.productId || item.id || 0,
@@ -56,7 +56,7 @@ const AdminReports: React.FC = () => {
             }
 
             if (statsData.status === 'fulfilled') {
-                const data = statsData.value as any;
+                const data = statsData.value;
                 if (data && typeof data === 'object') {
                     setStatistics({
                         totalUsers: data.totalUsers || 0,
@@ -73,8 +73,8 @@ const AdminReports: React.FC = () => {
                 setStatistics(demoData.statistics);
             }
 
-        } catch (err: any) {
-            console.error('Ошибка загрузки отчетов:', err);
+        } catch {
+            console.error('Ошибка загрузки отчетов:');
             setPopularProducts(demoData.popularProducts);
             setStatistics(demoData.statistics);
             setError('Не удалось загрузить данные с сервера. Отображаются демо-данные.');
@@ -95,7 +95,7 @@ const AdminReports: React.FC = () => {
         return (
             <div className="admin-reports">
                 <div className="reports-header">
-                    <h1>Панель управления</h1>
+                    <h1>Панель статистики</h1>
                     <p className="header-subtitle">Аналитика и статистика системы</p>
                 </div>
                 <div className="loading-container">
@@ -110,7 +110,7 @@ const AdminReports: React.FC = () => {
         <div className="admin-reports">
             {/* Заголовок */}
             <div className="reports-header">
-                <h1>Панель управления</h1>
+                <h1>Панель статистики</h1>
                 <p className="header-subtitle">Обзор статистики системы и популярных товаров</p>
             </div>
 
@@ -131,7 +131,6 @@ const AdminReports: React.FC = () => {
                         <p className="metric-value">
                             {statistics ? formatCurrency(statistics.totalRevenue) : '—'}
                         </p>
-                        <p className="metric-trend">+12.5% за месяц</p>
                     </div>
                 </div>
 
@@ -142,7 +141,6 @@ const AdminReports: React.FC = () => {
                         <p className="metric-value">
                             {statistics ? statistics.totalUsers.toLocaleString() : '—'}
                         </p>
-                        <p className="metric-trend">+{statistics ? Math.floor(statistics.totalUsers * 0.15) : 0} новых</p>
                     </div>
                 </div>
 
@@ -153,7 +151,6 @@ const AdminReports: React.FC = () => {
                         <p className="metric-value">
                             {statistics ? statistics.totalProducts : '—'}
                         </p>
-                        <p className="metric-trend">{statistics ? Math.floor(statistics.totalProducts * 0.7) : 0} на складе</p>
                     </div>
                 </div>
 
@@ -164,7 +161,6 @@ const AdminReports: React.FC = () => {
                         <p className="metric-value">
                             {statistics ? statistics.activeReservations : '—'}
                         </p>
-                        <p className="metric-trend">{statistics ? Math.floor(statistics.activeReservations * 0.8) : 0} ожидают</p>
                     </div>
                 </div>
             </div>
