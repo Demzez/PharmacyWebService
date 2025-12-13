@@ -64,8 +64,6 @@ public class AdminService {
 
         stats.setActiveReservations(reservationService.countActiveReservations());
 
-        // Общая выручка
-        // Получаем выручку за все время
         LocalDate startDate = LocalDate.of(2000, 1, 1); // Далекая дата в прошлом
         LocalDate endDate = LocalDate.now();
         Double totalRevenue = saleReportRepository.getTotalRevenueByPeriod(startDate, endDate);

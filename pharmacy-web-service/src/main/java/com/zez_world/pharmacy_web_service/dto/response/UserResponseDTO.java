@@ -13,7 +13,6 @@ public class UserResponseDTO {
     private boolean active;
     private LocalDateTime createdAt;
 
-    // Конструктор из Entity
     public static UserResponseDTO from(User user) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.id = user.getId();
@@ -21,7 +20,6 @@ public class UserResponseDTO {
         dto.email = user.getEmail();
         dto.phone = user.getPhone();
         dto.role = user.getRole();
-        dto.active = user.isActive();
         dto.createdAt = user.getCreatedAt();
         return dto;
     }

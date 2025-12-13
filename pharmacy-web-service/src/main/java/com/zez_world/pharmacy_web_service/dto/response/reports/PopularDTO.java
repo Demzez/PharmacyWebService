@@ -6,7 +6,6 @@ public class PopularDTO {
     private String manufacturer;
     private Integer salesCount;
 
-    // Конструкторы
     public PopularDTO() {
     }
 

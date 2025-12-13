@@ -86,6 +86,7 @@ public class AdminController {
         return ResponseEntity.ok(reservationService.getUserReservations(userService.getUserIdByUsername(userLogin)));
     }
 
+    // Отчеты
     @GetMapping("/reports/popular")
     public ResponseEntity<List<PopularDTO>> getPopularProducts() {
         List<PopularDTO> popularProducts = adminService.getPopularProducts();

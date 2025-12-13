@@ -18,7 +18,6 @@ public class ProductResponseDTO {
     private boolean available;
     private boolean visible;
 
-    // Для публичного каталога
     public static ProductResponseDTO fromPublic(Product product) {
         ProductResponseDTO dto = new ProductResponseDTO();
         dto.id = product.getId();
@@ -36,7 +35,6 @@ public class ProductResponseDTO {
         return dto;
     }
 
-    // Для администратора (все поля)
     public static ProductResponseDTO fromAdmin(Product product) {
         ProductResponseDTO dto = fromPublic(product);
         // Можно добавить дополнительные поля для админа

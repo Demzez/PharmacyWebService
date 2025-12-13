@@ -27,8 +27,6 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    private boolean active = true;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -61,8 +59,6 @@ public class User {
     public void setPhone(String phone) { this.phone = phone; }
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public List<Reservation> getReservations() { return reservations; }

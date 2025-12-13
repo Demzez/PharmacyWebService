@@ -76,6 +76,8 @@ const MyReservations: React.FC = () => {
                             <div className="reservation-header">
                                 <div>
                                     <strong>{res.productName}</strong>
+                                </div>
+                                <div>
                                     <span className={`status ${getStatusClass(res.status)}`}>
                                         {res.status === 'ACTIVE' && 'Активно'}
                                         {res.status === 'EXPIRED' && 'Просрочено'}

@@ -76,7 +76,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess
                 <p><strong>В наличии:</strong> {product.stockQuantity} шт.</p>
             </div>
 
-            {product.available && (
+            {product.available ? (
                 <div className="product-actions">
                     <div className="quantity-selector">
                         <label>Количество:</label>
@@ -104,8 +104,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess
                         {loadingAnalogs ? 'Загрузка...' : showAnalogs ? 'Скрыть аналоги' : 'Показать аналоги'}
                     </button>
                 </div>
+            ) : (
+                <div className="product-actions">
+                    <button
+                        onClick={handleShowAnalogs}
+                        className="btn-primary"
+                        disabled={loadingAnalogs}
+                    >
+                        {loadingAnalogs ? 'Загрузка...' : 'Найти аналоги'}
+                    </button>
+                </div>
             )}
-
             {showAnalogs && analogs.length > 0 && (
                 <div className="analogs-section">
                     <h4>Аналоги:</h4>
@@ -123,10 +132,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onReservationSuccess
                                     height: '36px',
                                     fontSize: '14px',
                                     padding: '8px 12px',
-                                    flexShrink: 0 // Предотвращает сжатие кнопки
+                                    flexShrink: 0
                                 }}
                                 onClick={() => {
-                                    // Копирование имени в буфер обмена
                                     navigator.clipboard.writeText(analog.name)
                                 }}
                             >

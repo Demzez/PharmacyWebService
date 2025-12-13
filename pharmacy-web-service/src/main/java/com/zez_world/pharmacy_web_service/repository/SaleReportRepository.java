@@ -11,12 +11,6 @@ import java.util.List;
 
 @Repository
 public interface SaleReportRepository extends JpaRepository<SaleReport, Long> {
-    List<SaleReport> findBySaleDateBetween(LocalDate startDate, LocalDate endDate);
-    List<SaleReport> findByProductId(Long productId);
-
-    @Query("SELECT sr FROM SaleReport sr WHERE sr.saleDate BETWEEN :startDate AND :endDate ORDER BY sr.totalAmount DESC")
-    List<SaleReport> findTopSellingProductsByPeriod(@Param("startDate") LocalDate startDate,
-                                                    @Param("endDate") LocalDate endDate);
 
     @Query("SELECT SUM(sr.totalAmount) FROM SaleReport sr WHERE sr.saleDate BETWEEN :startDate AND :endDate")
     Double getTotalRevenueByPeriod(@Param("startDate") LocalDate startDate,

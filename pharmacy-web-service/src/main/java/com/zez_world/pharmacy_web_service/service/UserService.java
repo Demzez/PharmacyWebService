@@ -36,7 +36,6 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         user.setRole(Role.ROLE_USER);
-        user.setActive(true);
 
         User savedUser = userRepository.save(user);
         return UserResponseDTO.from(savedUser);
@@ -49,14 +48,14 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         user.setRole(Role.ROLE_ADMIN);
-        user.setActive(true);
+
 
         User savedUser = userRepository.save(user);
         return UserResponseDTO.from(savedUser);
     }
 
     public List<UserResponseDTO> getAllUsers() {
-        return userRepository.findByActiveTrue()
+        return userRepository.findByRole(Role.ROLE_USER)
                 .stream()
                 .map(UserResponseDTO::from)
                 .collect(Collectors.toList());
@@ -84,7 +83,6 @@ public class UserService {
     public void deactivateUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        user.setActive(false);
         userRepository.save(user);
     }
 

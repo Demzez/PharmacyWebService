@@ -6,7 +6,6 @@ public class StatisticsDTO {
     private Integer activeReservations;
     private Integer totalRevenue;
 
-    // Конструкторы
     public StatisticsDTO() {
     }
 
