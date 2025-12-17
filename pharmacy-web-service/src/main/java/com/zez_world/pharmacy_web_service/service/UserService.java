@@ -41,19 +41,6 @@ public class UserService {
         return UserResponseDTO.from(savedUser);
     }
 
-    public UserResponseDTO createAdmin(UserCreateDTO userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setEmail(userDto.getEmail());
-        user.setPhone(userDto.getPhone());
-        user.setRole(Role.ROLE_ADMIN);
-
-
-        User savedUser = userRepository.save(user);
-        return UserResponseDTO.from(savedUser);
-    }
-
     public List<UserResponseDTO> getAllUsers() {
         return userRepository.findByRole(Role.ROLE_USER)
                 .stream()
@@ -61,30 +48,37 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-
-    public Optional<UserResponseDTO> getUserById(Long id) {
-        return userRepository.findById(id)
-                .map(UserResponseDTO::from);
-    }
-
-    public UserResponseDTO updateUser(Long id, UserCreateDTO userDetails) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        user.setUsername(userDetails.getUsername());
-        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
-        user.setEmail(userDetails.getEmail());
-        user.setPhone(userDetails.getPhone());
-
-        User updatedUser = userRepository.save(user);
-        return UserResponseDTO.from(updatedUser);
-    }
-
-    public void deactivateUser(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        userRepository.save(user);
-    }
+//    public UserResponseDTO createAdmin(UserCreateDTO userDto) {
+//        User user = new User();
+//        user.setUsername(userDto.getUsername());
+//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//        user.setEmail(userDto.getEmail());
+//        user.setPhone(userDto.getPhone());
+//        user.setRole(Role.ROLE_ADMIN);
+//
+//
+//        User savedUser = userRepository.save(user);
+//        return UserResponseDTO.from(savedUser);
+//    }
+//
+//    public UserResponseDTO updateUser(Long id, UserCreateDTO userDetails) {
+//        User user = userRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        user.setUsername(userDetails.getUsername());
+//        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+//        user.setEmail(userDetails.getEmail());
+//        user.setPhone(userDetails.getPhone());
+//
+//        User updatedUser = userRepository.save(user);
+//        return UserResponseDTO.from(updatedUser);
+//    }
+//
+//    public void deactivateUser(Long id) {
+//        User user = userRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//        userRepository.save(user);
+//    }
 
     public boolean validateUserCredentials(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);

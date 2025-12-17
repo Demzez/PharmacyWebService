@@ -31,29 +31,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    // Управление пользователями
-//    @PostMapping("/users/create")
-//    public ResponseEntity<UserResponseDTO> createAdmin(@RequestBody UserCreateDTO userDto) {
-//        return ResponseEntity.ok(userService.createAdmin(userDto));
-//    }
-//
-//    @GetMapping("/users")
-//    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-//        return ResponseEntity.ok(userService.getAllUsers());
-//    }
-//
-//
-//    @PutMapping("/users/{id}")
-//    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserCreateDTO userDto) {
-//        return ResponseEntity.ok(userService.updateUser(id, userDto));
-//    }
-//
-//    @DeleteMapping("/users/{id}")
-//    public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
-//        userService.deactivateUser(id);
-//        return ResponseEntity.ok().build();
-//    }
-
     // Управление продуктами
     @GetMapping("/products/all_catalog")
     public ResponseEntity<List<ProductResponseDTO>> getCatalog() {

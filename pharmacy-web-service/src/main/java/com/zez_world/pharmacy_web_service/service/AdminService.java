@@ -27,13 +27,10 @@ public class AdminService {
     private ReservationService reservationService;
 
 
-    // НОВЫЙ МЕТОД 2: Получение популярных продуктов (аналог getPopularProducts)
     public List<PopularDTO> getPopularProducts() {
-        // Получаем данные за последние 30 дней
         List<Object[]> popularProducts = saleReportRepository.findPopularProductsByPeriod(
                 LocalDate.now().minusDays(30), LocalDate.now());
 
-        // Преобразуем в PopularDTO
         List<PopularDTO> result = new ArrayList<>();
 
         for (Object[] row : popularProducts) {
@@ -44,7 +41,7 @@ public class AdminService {
             dto.setId(product.getId());
             dto.setName(product.getName());
             dto.setManufacturer(product.getManufacturer());
-            dto.setSalesCount(totalSold.intValue()); // Преобразуем Long в Integer
+            dto.setSalesCount(totalSold.intValue());
 
             result.add(dto);
         }
@@ -52,19 +49,16 @@ public class AdminService {
         return result;
     }
 
-    // НОВЫЙ МЕТОД 3: Получение статистики системы
     public StatisticsDTO getSystemStatistics() {
         StatisticsDTO stats = new StatisticsDTO();
 
-        // Количество пользователей
         stats.setTotalUsers(userService.getAllUsers().size());
 
-        // Количество продуктов
         stats.setTotalProducts(productService.getPublicCatalog().size());
 
         stats.setActiveReservations(reservationService.countActiveReservations());
 
-        LocalDate startDate = LocalDate.of(2000, 1, 1); // Далекая дата в прошлом
+        LocalDate startDate = LocalDate.of(2000, 1, 1);
         LocalDate endDate = LocalDate.now();
         Double totalRevenue = saleReportRepository.getTotalRevenueByPeriod(startDate, endDate);
 
@@ -72,7 +66,7 @@ public class AdminService {
             totalRevenue = 0.0;
         }
 
-        stats.setTotalRevenue(totalRevenue.intValue()); // Преобразуем Double в Integer
+        stats.setTotalRevenue(totalRevenue.intValue());
 
         return stats;
     }

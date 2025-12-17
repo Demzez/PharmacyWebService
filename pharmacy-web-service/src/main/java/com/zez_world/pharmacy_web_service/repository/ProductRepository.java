@@ -11,10 +11,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByVisibleTrue();
-    List<Product> findByVisibleTrueAndStockQuantityGreaterThan(Integer quantity);
-    List<Product> findByNameContainingIgnoreCase(String name);
-    List<Product> findByActiveSubstanceContainingIgnoreCase(String activeSubstance);
-    List<Product> findByCategoryContainingIgnoreCase(String category);
 
     @Query("SELECT p FROM Product p WHERE p.activeSubstance = :activeSubstance AND p.category = :category  AND p.id != :excludeId AND p.visible = true")
     List<Product> findAnalogsByActiveSubstanceAndCategory(@Param("activeSubstance") String activeSubstance,
@@ -34,7 +30,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "LOWER(p.category) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(p.manufacturer) LIKE LOWER(CONCAT('%', :query, '%')))")
     List<Product> universalAdminSearch(@Param("query") String query);
-
-    @Query("SELECT p FROM Product p WHERE p.visible = true AND p.stockQuantity > 0 ORDER BY p.stockQuantity DESC LIMIT 10")
-    List<Product> findPopularProducts();
 }

@@ -32,13 +32,6 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductResponseDTO> getAvailableProducts() {
-        return productRepository.findByVisibleTrueAndStockQuantityGreaterThan(0)
-                .stream()
-                .map(ProductResponseDTO::fromPublic)
-                .collect(Collectors.toList());
-    }
-
     public List<ProductResponseDTO> searchProducts(String query) {
         return productRepository.universalSearch(query)
                 .stream()
@@ -53,26 +46,26 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductResponseDTO> searchByName(String name) {
-        return productRepository.findByNameContainingIgnoreCase(name)
-                .stream()
-                .map(ProductResponseDTO::fromPublic)
-                .collect(Collectors.toList());
-    }
-
-    public List<ProductResponseDTO> searchByActiveSubstance(String activeSubstance) {
-        return productRepository.findByActiveSubstanceContainingIgnoreCase(activeSubstance)
-                .stream()
-                .map(ProductResponseDTO::fromPublic)
-                .collect(Collectors.toList());
-    }
-
-    public List<ProductResponseDTO> searchByCategory(String category) {
-        return productRepository.findByCategoryContainingIgnoreCase(category)
-                .stream()
-                .map(ProductResponseDTO::fromPublic)
-                .collect(Collectors.toList());
-    }
+//    public List<ProductResponseDTO> searchByName(String name) {
+//        return productRepository.findByNameContainingIgnoreCase(name)
+//                .stream()
+//                .map(ProductResponseDTO::fromPublic)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<ProductResponseDTO> searchByActiveSubstance(String activeSubstance) {
+//        return productRepository.findByActiveSubstanceContainingIgnoreCase(activeSubstance)
+//                .stream()
+//                .map(ProductResponseDTO::fromPublic)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<ProductResponseDTO> searchByCategory(String category) {
+//        return productRepository.findByCategoryContainingIgnoreCase(category)
+//                .stream()
+//                .map(ProductResponseDTO::fromPublic)
+//                .collect(Collectors.toList());
+//    }
 
     public List<AnalogProductDTO> findAnalogs(Long productId) {
         Product original = productRepository.findById(productId)
@@ -141,18 +134,6 @@ public class ProductService {
 
         product.setStockQuantity(newQuantity);
         productRepository.save(product);
-    }
-
-    public Optional<ProductResponseDTO> getProductById(Long id) {
-        return productRepository.findById(id)
-                .map(ProductResponseDTO::fromPublic);
-    }
-
-    public List<ProductResponseDTO> getPopularProducts() {
-        return productRepository.findPopularProducts()
-                .stream()
-                .map(ProductResponseDTO::fromPublic)
-                .collect(Collectors.toList());
     }
 
     public Product getProductEntityById(Long id) {

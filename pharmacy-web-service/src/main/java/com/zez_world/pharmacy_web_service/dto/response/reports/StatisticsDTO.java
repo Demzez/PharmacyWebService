@@ -21,31 +21,24 @@ public class StatisticsDTO {
     public Integer getTotalUsers() {
         return totalUsers;
     }
-
     public void setTotalUsers(Integer totalUsers) {
         this.totalUsers = totalUsers;
     }
-
     public Integer getTotalProducts() {
         return totalProducts;
     }
-
     public void setTotalProducts(Integer totalProducts) {
         this.totalProducts = totalProducts;
     }
-
     public Integer getActiveReservations() {
         return activeReservations;
     }
-
     public void setActiveReservations(Integer activeReservations) {
         this.activeReservations = activeReservations;
     }
-
     public Integer getTotalRevenue() {
         return totalRevenue;
     }
-
     public void setTotalRevenue(Integer totalRevenue) {
         this.totalRevenue = totalRevenue;
     }

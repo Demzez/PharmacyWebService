@@ -58,6 +58,10 @@ public class DemoDataLoader implements CommandLineRunner {
 
         List<Product> products = new ArrayList<>();
 
+        products.add(createProduct("Нимесулид-Тева", "Тева", "Таблетки 100мг", 30,
+                LocalDate.of(2025, 8, 25), PrescriptionStatus.NON_PRESCRIPTION,
+                8.20, 60, "Нимесулид", "Обезболивающие и жаропонижающие"));
+
         products.add(createProduct("Нурофен Экспресс", "Рекитт Бенкизер Хелскэр", "Капсулы", 200,
                 LocalDate.of(2025, 12, 31), PrescriptionStatus.NON_PRESCRIPTION,
                 8.50, 45, "Ибупрофен", "Обезболивающие и жаропонижающие"));
@@ -109,9 +113,7 @@ public class DemoDataLoader implements CommandLineRunner {
         products.add(createProduct("Нимид", "Ипка", "Таблетки 100мг", 20,
                 LocalDate.of(2025, 6, 20), PrescriptionStatus.NON_PRESCRIPTION,
                 4.90, 95, "Нимесулид", "Обезболивающие и жаропонижающие"));
-        products.add(createProduct("Нимесулид-Тева", "Тева", "Таблетки 100мг", 30,
-                LocalDate.of(2025, 8, 25), PrescriptionStatus.NON_PRESCRIPTION,
-                8.20, 60, "Нимесулид", "Обезболивающие и жаропонижающие"));
+
 
         products.add(createProduct("Амоксиклав 625", "Сандоз", "Таблетки 625мг", 14,
                 LocalDate.of(2024, 11, 30), PrescriptionStatus.PRESCRIPTION,

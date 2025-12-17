@@ -24,11 +24,6 @@ public class ProductController {
         return ResponseEntity.ok(productService.getPublicCatalog());
     }
 
-//    @GetMapping("/available")
-//    public ResponseEntity<List<ProductResponseDTO>> getAvailableProducts() {
-//        return ResponseEntity.ok(productService.getAvailableProducts());
-//    }
-
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDTO>> searchProducts(@RequestParam String query) {
         return ResponseEntity.ok(productService.searchProducts(query));
@@ -59,23 +54,5 @@ public class ProductController {
 //        return productService.getProductById(id)
 //                .map(ResponseEntity::ok)
 //                .orElse(ResponseEntity.notFound().build());
-//    }
-//
-//    @GetMapping("/{id}/availability")
-//    public ResponseEntity<Map<String, Object>> checkAvailability(@PathVariable Long id) {
-//        return productService.getProductById(id)
-//                .map(product -> {
-//                    Map<String, Object> response = new HashMap<>();
-//                    response.put("available", product.getStockQuantity() > 0);
-//                    response.put("quantity", product.getStockQuantity());
-//                    response.put("product", product);
-//                    return ResponseEntity.ok(response);
-//                })
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-//
-//    @GetMapping("/popular")
-//    public ResponseEntity<List<ProductResponseDTO>> getPopularProducts() {
-//        return ResponseEntity.ok(productService.getPopularProducts());
 //    }
 }

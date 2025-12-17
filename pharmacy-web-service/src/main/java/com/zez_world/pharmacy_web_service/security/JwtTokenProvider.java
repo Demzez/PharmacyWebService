@@ -27,9 +27,7 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
-        // Создаем ключ из секрета
         byte[] keyBytes = secretKey.getBytes();
-        // Для HS256 нужен ключ минимум 32 байта
         if (keyBytes.length < 32) {
             keyBytes = Arrays.copyOf(keyBytes, 32);
         }

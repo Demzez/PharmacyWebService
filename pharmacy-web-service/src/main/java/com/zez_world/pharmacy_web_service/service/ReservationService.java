@@ -4,10 +4,8 @@ import com.zez_world.pharmacy_web_service.dto.request.ReservationRequestDTO;
 import com.zez_world.pharmacy_web_service.dto.response.ReservationResponseDTO;
 import com.zez_world.pharmacy_web_service.entity.Product;
 import com.zez_world.pharmacy_web_service.entity.Reservation;
-import com.zez_world.pharmacy_web_service.entity.SaleReport;
 import com.zez_world.pharmacy_web_service.entity.User;
 import com.zez_world.pharmacy_web_service.repository.ReservationRepository;
-import com.zez_world.pharmacy_web_service.repository.SaleReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -47,7 +45,6 @@ public class ReservationService {
             throw new RuntimeException("Insufficient stock");
         }
 
-        // Резервируем товар
         productService.updateStockQuantity(reservationDto.getProductId(), -reservationDto.getQuantity());
 
         Reservation reservation = new Reservation(user, product, reservationDto.getQuantity());
@@ -57,13 +54,6 @@ public class ReservationService {
 
     public List<ReservationResponseDTO> getUserReservations(Long userId) {
         return reservationRepository.findByUserId(userId)
-                .stream()
-                .map(ReservationResponseDTO::from)
-                .collect(Collectors.toList());
-    }
-
-    public List<ReservationResponseDTO> getActiveUserReservations(Long userId) {
-        return reservationRepository.findActiveReservationsByUser(userId)
                 .stream()
                 .map(ReservationResponseDTO::from)
                 .collect(Collectors.toList());
@@ -83,7 +73,6 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        // Возвращаем товар на склад
         productService.updateStockQuantity(reservation.getProduct().getId(), reservation.getQuantity());
 
         reservationRepository.delete(reservation);
@@ -93,8 +82,8 @@ public class ReservationService {
         return reservationRepository.countByCompletedFalse();
     }
 
-    // Автоматическая отмена просроченных бронирований
-    @Scheduled(fixedRate = 3600000) // Каждый час
+    // отмена просроченных и чистка выполненных бронирований
+    @Scheduled(fixedRate = 3600000) // каждый час
     public void cancelExpiredReservations() {
         List<Reservation> expiredReservations =
                 reservationRepository.findByCompletedFalseAndExpiryDateBefore(LocalDateTime.now());
