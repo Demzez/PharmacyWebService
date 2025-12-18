@@ -87,6 +87,8 @@ const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin }) => {
                         value={userData.phone}
                         onChange={(e) => setUserData({...userData, phone: e.target.value})}
                         disabled={isLoading}
+                        pattern="^(\+375|80)[\s\-]?\(?(29|25|44|33)\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$"
+                        title="Формат: +375 (XX) XXX-XX-XX"
                     />
                 </div>
                 {error && <div className="error-message">{error}</div>}

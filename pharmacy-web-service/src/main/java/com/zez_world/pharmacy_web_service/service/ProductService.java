@@ -46,27 +46,6 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-//    public List<ProductResponseDTO> searchByName(String name) {
-//        return productRepository.findByNameContainingIgnoreCase(name)
-//                .stream()
-//                .map(ProductResponseDTO::fromPublic)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public List<ProductResponseDTO> searchByActiveSubstance(String activeSubstance) {
-//        return productRepository.findByActiveSubstanceContainingIgnoreCase(activeSubstance)
-//                .stream()
-//                .map(ProductResponseDTO::fromPublic)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public List<ProductResponseDTO> searchByCategory(String category) {
-//        return productRepository.findByCategoryContainingIgnoreCase(category)
-//                .stream()
-//                .map(ProductResponseDTO::fromPublic)
-//                .collect(Collectors.toList());
-//    }
-
     public List<AnalogProductDTO> findAnalogs(Long productId) {
         Product original = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));

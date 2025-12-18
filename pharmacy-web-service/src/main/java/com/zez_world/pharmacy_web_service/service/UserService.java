@@ -48,38 +48,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-//    public UserResponseDTO createAdmin(UserCreateDTO userDto) {
-//        User user = new User();
-//        user.setUsername(userDto.getUsername());
-//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//        user.setEmail(userDto.getEmail());
-//        user.setPhone(userDto.getPhone());
-//        user.setRole(Role.ROLE_ADMIN);
-//
-//
-//        User savedUser = userRepository.save(user);
-//        return UserResponseDTO.from(savedUser);
-//    }
-//
-//    public UserResponseDTO updateUser(Long id, UserCreateDTO userDetails) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        user.setUsername(userDetails.getUsername());
-//        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
-//        user.setEmail(userDetails.getEmail());
-//        user.setPhone(userDetails.getPhone());
-//
-//        User updatedUser = userRepository.save(user);
-//        return UserResponseDTO.from(updatedUser);
-//    }
-//
-//    public void deactivateUser(Long id) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//        userRepository.save(user);
-//    }
-
     public boolean validateUserCredentials(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
         return user.isPresent() && passwordEncoder.matches(password, user.get().getPassword());

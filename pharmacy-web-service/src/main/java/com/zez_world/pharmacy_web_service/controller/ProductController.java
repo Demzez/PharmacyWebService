@@ -29,30 +29,10 @@ public class ProductController {
         return ResponseEntity.ok(productService.searchProducts(query));
     }
 
-//    @GetMapping("/search/name")
-//    public ResponseEntity<List<ProductResponseDTO>> searchByName(@RequestParam String name) {
-//        return ResponseEntity.ok(productService.searchByName(name));
-//    }
-
-//    @GetMapping("/search/substance")
-//    public ResponseEntity<List<ProductResponseDTO>> searchByActiveSubstance(@RequestParam String substance) {
-//        return ResponseEntity.ok(productService.searchByActiveSubstance(substance));
-//    }
-
-//    @GetMapping("/search/category")
-//    public ResponseEntity<List<ProductResponseDTO>> searchByCategory(@RequestParam String category) {
-//        return ResponseEntity.ok(productService.searchByCategory(category));
-//    }
 
     @GetMapping("/{id}/analogs")
     public ResponseEntity<List<AnalogProductDTO>> getAnalogs(@PathVariable Long id) {
         return ResponseEntity.ok(productService.findAnalogs(id));
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
-//        return productService.getProductById(id)
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
 }

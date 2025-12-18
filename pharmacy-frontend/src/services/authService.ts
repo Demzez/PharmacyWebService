@@ -6,7 +6,6 @@ export const authService = {
         const response = await api.post('/auth/login', credentials);
         const { token, username, role } = response.data;
 
-        // Сохраняем токен и информацию о пользователе
         localStorage.setItem('authToken', token);
         localStorage.setItem('currentUser', JSON.stringify({
             username,
